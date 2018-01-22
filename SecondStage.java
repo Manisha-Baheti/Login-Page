@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 public class SecondStage extends Stage {
 VBox y = new VBox();
 
-SecondStage(){
+SecondStage(Stage stage){
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -118,6 +118,18 @@ SecondStage(){
                   actiontarget.setText("Please enter Date of Birth"); 
                 }
                 
+                else if(eadd.getText().isEmpty()) 
+                {
+                    actiontarget.setFill(Color.FIREBRICK);
+                  actiontarget.setText("Please enter your e-mail id"); 
+                }
+                
+                else if(uname.getText().isEmpty()) 
+                {
+                    actiontarget.setFill(Color.FIREBRICK);
+                  actiontarget.setText("Please enter your username"); 
+                }
+                
                 else if(pwBox.getText().isEmpty()) 
                 {
                     actiontarget.setFill(Color.FIREBRICK);
@@ -135,11 +147,7 @@ SecondStage(){
                     actiontarget.setFill(Color.FIREBRICK);
                     actiontarget.setText("Passwords Not Matching, please re-enter");
                 }
-               else if(eadd.getText().isEmpty()) 
-                {
-                    actiontarget.setFill(Color.FIREBRICK);
-                  actiontarget.setText("Please enter your e-mail id"); 
-                }
+               
                 
                else if(sadd.getText().isEmpty()) 
                 {
@@ -166,14 +174,16 @@ SecondStage(){
                {
                    insertData(loginuser, pass, first, last, dob, email, sques, sans );
                    actiontarget.setFill(Color.FIREBRICK);
-                   actiontarget.setText("New user created successfully."); 
-           
-               new welcome(loginuser, pass);
+                   actiontarget.setText("New user created successfully.");
+                   stage.close();
+                   new welcome(loginuser, pass);
                }
                else
                {
+                   uname.clear();
                    actiontarget.setFill(Color.FIREBRICK);
-               actiontarget.setText("User name already in use ");
+                   actiontarget.setText("User name already in use. Choose Another user name.");
+               
                }
                
               }
@@ -182,10 +192,8 @@ SecondStage(){
             
         });
         
-        
-        
-    this.setScene(new Scene(grid, 600, 600));
-    this.show();
+   stage.setScene(new Scene(grid, 600, 600));
+   stage.show();
 }  
 
 
@@ -277,4 +285,3 @@ public static boolean compareUname(String s)
 	}
 }
 }
-
