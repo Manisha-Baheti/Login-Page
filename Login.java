@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -83,13 +84,18 @@ public class Login extends Application
                 
                if(access == 1)
                  {
+                  actiontarget.setText("login successful");
+                  primaryStage.close();
                   new welcome(loginuser, pass);
+                 
                  }
                 
                 if(access == 0)
                  {
                   actiontarget.setFill(Color.FIREBRICK);
-                  actiontarget.setText("Sign-in details are incorrect");   
+                  actiontarget.setText("login failed/re-enter");
+                  userTextField.clear();
+                  pwBox.clear();
                  }
                
                  
@@ -103,7 +109,7 @@ public class Login extends Application
             @Override
             public void handle(ActionEvent e) 
             {
-                new forgot();
+                new forgot(primaryStage);
             }
         });
         
@@ -113,7 +119,8 @@ public class Login extends Application
             @Override
             public void handle(ActionEvent e) 
             {
-                new SecondStage();
+                primaryStage.close();
+                new SecondStage(primaryStage);
                 
             }
         });
