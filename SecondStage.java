@@ -130,7 +130,11 @@ SecondStage(){
                   actiontarget.setText("Please confirm your your password"); 
                 }
                 
-               
+                else if(!pwBox.getText().equalsIgnoreCase(pwBox1.getText()))
+                {
+                    actiontarget.setFill(Color.FIREBRICK);
+                    actiontarget.setText("Passwords Not Matching, please re-enter");
+                }
                else if(eadd.getText().isEmpty()) 
                 {
                     actiontarget.setFill(Color.FIREBRICK);
@@ -158,12 +162,19 @@ SecondStage(){
                String email=eadd.getText();
                String sques = sadd.getText();
                String sans = sanw.getText();
-              
-               insertData(loginuser, pass, first, last, dob, email, sques, sans );
-               actiontarget.setFill(Color.FIREBRICK);
-               actiontarget.setText("New user created successfully."); 
-               
+               if(!compareUname(loginuser))
+               {
+                   insertData(loginuser, pass, first, last, dob, email, sques, sans );
+                   actiontarget.setFill(Color.FIREBRICK);
+                   actiontarget.setText("New user created successfully."); 
+           
                new welcome(loginuser, pass);
+               }
+               else
+               {
+                   actiontarget.setFill(Color.FIREBRICK);
+               actiontarget.setText("User name already in use ");
+               }
                
               }
                
@@ -203,6 +214,34 @@ protected static Connection getSQLConnection()
 	}
 	return con;
     }
+
+public static boolean compareUname(String s)
+{
+    Connection con = getSQLConnection();
+    boolean login =false;
+    try
+	{
+		Statement v = con.createStatement();
+		String select = "SELECT * FROM login;";
+		ResultSet rows;
+		rows = v.executeQuery(select);
+		while(rows.next() && login == false)
+		{
+                    String uname = rows.getString("uname");
+			if(uname.equalsIgnoreCase(s))
+			{
+				login=true;
+			}
+                }
+        }
+    catch(SQLException e)
+	{
+		System.out.println(e.getErrorCode());
+	        System.exit(0);
+		return login;
+	}
+    return login;
+}
 
  public static void insertData(String userlog, String userpass, String fname, String lname, String dob, String email, String sques, String sanw)
     {
