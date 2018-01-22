@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,7 +27,7 @@ public class forgot extends Stage
      String ques="";
      String email="";
     
-     forgot()
+     forgot(Stage stage)
     {
 
 	GridPane grid = new GridPane();
@@ -61,22 +62,23 @@ public class forgot extends Stage
                if(access==1)
                 {
                     //new squestion();
-                    compareAnswer();
+                    compareAnswer(stage);
                 }
                 
                 {
                   actiontarget.setFill(Color.FIREBRICK);
-                  actiontarget.setText("E-mail is incorrect");   
+                  actiontarget.setText("E-mail is incorrect");
+                  eadd.clear();
                  }
             }
         });
         
-        this.setScene(new Scene(grid, 600, 600));
-        this.show();
+        stage.setScene(new Scene(grid, 600, 600));
+        stage.show();
         
     }  
      
-      public void compareAnswer()
+      public void compareAnswer(Stage stage)
     {
 
 	GridPane grid = new GridPane();
@@ -111,19 +113,21 @@ public class forgot extends Stage
                 
                 if(access1 == 1)
                         {
+                           stage.close();
                            welcome();
                         }
 
                         else if(access1 == 0)
                          {
                          actiontarget.setFill(Color.FIREBRICK);
-                         actiontarget.setText("Answer is incorrect");   
+                         actiontarget.setText("Answer is incorrect");
+                         sanw.clear();
                         }
                 }
          });
         
-        this.setScene(new Scene(grid, 600, 600));
-        this.show();
+        stage.setScene(new Scene(grid, 600, 600));
+        stage.show();
         
     }  
       
@@ -284,11 +288,25 @@ public class forgot extends Stage
     grid.setPadding(new Insets(25, 25, 25, 25));
     
     Label u1= new Label("Welcome");
+    u1.setFont(new Font("Arial", 50));
+    u1.setTextFill(Color.FIREBRICK); 
     grid.add(u1, 0, 1);
-    Label u2= new Label(printUsername(email));
-    grid.add(u2, 0, 3);
-    Label u3= new Label(printPassword(email));
-    grid.add(u3, 0, 5);
+    
+    Label u2= new Label("Username: ");
+    u2.setTextFill(Color.FIREBRICK); 
+    grid.add(u2, 0, 2);
+    
+    Label u3= new Label(printUsername(email));
+    u3.setTextFill(Color.FIREBRICK); 
+    grid.add(u3, 1, 2);
+    
+    Label u4= new Label("Password: ");
+    u4.setTextFill(Color.FIREBRICK); 
+    grid.add(u4, 0, 3);
+    
+    Label u5= new Label(printPassword(email));
+    u5.setTextFill(Color.FIREBRICK); 
+    grid.add(u5, 1, 3);
 	
    
     this.setScene(new Scene(grid, 600, 600));
